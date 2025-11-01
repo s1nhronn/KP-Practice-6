@@ -18,9 +18,21 @@ int main()
   rm(mtx, rows);
 }
 
-void rm(int **mtx, int r) {
-  for (size_t i = 0; i < r; i++) {
+void rm(int **mtx, int r)
+{
+  for (size_t i = 0; i < r; i++)
+  {
     delete[] mtx[i];
   }
   delete[] mtx;
+}
+
+int **make(int r, int c)
+{
+  int **mtx = new int *[r];
+  for (size_t i = 0; i < r; i++)
+  {
+    mtx[i] = new int[c];
+  }
+  return mtx;
 }
