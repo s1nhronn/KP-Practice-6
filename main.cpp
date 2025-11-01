@@ -2,8 +2,9 @@
 #include <new>
 
 int **make(int rows, int cols);
-void output(const int *const *mtx);
+void output(const int *const *mtx, int r, int c);
 void rm(int **mtx, int r);
+void input(int **mtx, int r, int c);
 
 int main()
 {
@@ -21,7 +22,13 @@ int main()
   {
     return 2;
   }
-  output(mtx);
+  input(mtx, rows, cols);
+  if (std::cin.fail())
+  {
+    rm(mtx, rows);
+    return 1;
+  }
+  output(mtx, rows, cols);
   rm(mtx, rows);
 }
 
@@ -49,4 +56,27 @@ int **make(int r, int c)
     }
   }
   return mtx;
+}
+
+void input(int **mtx, int r, int c)
+{
+  for (size_t i = 0; i < r; i++)
+  {
+    for (size_t j = 0; j < c; j++)
+    {
+      std::cin >> mtx[i][j];
+    }
+  }
+}
+
+void output(const int *const *mtx, int r, int c)
+{
+  for (size_t i = 0; i < r; i++)
+  {
+    for (size_t j = 0; j < c; j++)
+    {
+      std::cout << mtx[i][j] << ' ';
+    }
+    std::cout << '\n';
+  }
 }
