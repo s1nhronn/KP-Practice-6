@@ -1,7 +1,7 @@
 #include <iostream>
 
 int **make(int rows, int cols);
-void output(int **mtx);
+void output(const int *const *mtx);
 void rm(int **mtx);
 
 int main()
