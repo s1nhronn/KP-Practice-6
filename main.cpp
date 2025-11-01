@@ -53,6 +53,8 @@ int main()
     result = convert(t, n, lns, rows);
   } catch (std::bad_alloc &)
   {
+    delete[] t;
+    delete[] lns;
     return 2;
   }
   outputMatrix(result, rows, lns);
@@ -101,7 +103,14 @@ void outputMatrix(const int *const *mtx, int r, const size_t *lns)
 
 int **convert(const int *t, size_t n, const size_t *lns, size_t rows)
 {
-  int **result = makeMatrix(rows, lns);
+  int **result = nullptr;
+  try
+  {
+    result = makeMatrix(rows, lns);
+  } catch (const std::bad_alloc &)
+  {
+    throw;
+  }
   size_t start = 0, pos = 0;
   while (start < n)
   {
