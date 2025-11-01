@@ -2,7 +2,6 @@
 #include <new>
 
 int **makeMatrix(int r, const size_t *lns);
-int *makeMassive(int r, size_t n);
 void output(const int *const *mtx, int r, const size_t *lns);
 void rm(int **mtx, int r);
 int **convert(const int *t, size_t n, const size_t *lns, size_t rows);
@@ -27,7 +26,7 @@ int **makeMatrix(int r, const size_t *lns)
   {
     try
     {
-      // TODO: Запись i-ой строки матрицы
+      mtx[i] = new int[lns[i]];
     } catch (const std::bad_alloc &)
     {
       rm(mtx, i);
@@ -41,6 +40,10 @@ void output(const int *const *mtx, int r, const size_t *lns)
 {
   for (size_t i = 0; i < r; i++)
   {
-    // TODO: Вывод элементов
+    for (size_t j = 0; j < lns[i]; j++)
+    {
+      std::cout << mtx[i][j] << ' ';
+    }
+    std::cout << '\n';
   }
 }
