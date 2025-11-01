@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include <new>
 
@@ -18,7 +19,7 @@ int main()
   {
     return 2;
   }
-  for (int i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
   {
     std::cin >> t[i];
   }
@@ -36,9 +37,28 @@ int main()
     delete[] t;
     return 2;
   }
-  int **result = convert(t, n, lns, rows);
+  for (size_t i = 0; i < rows; i++)
+  {
+    std::cin >> lns[i];
+  }
+  if (std::cin.fail())
+  {
+    delete[] t;
+    delete[] lns;
+    return 1;
+  }
+  int **result = nullptr;
+  try
+  {
+    result = convert(t, n, lns, rows);
+  } catch (std::bad_alloc &)
+  {
+    return 2;
+  }
   outputMatrix(result, rows, lns);
   rm(result, rows);
+  delete[] t;
+  delete[] lns;
 }
 
 void rm(int **mtx, int r)
@@ -77,4 +97,19 @@ void outputMatrix(const int *const *mtx, int r, const size_t *lns)
     }
     std::cout << '\n';
   }
+}
+
+int **convert(const int *t, size_t n, const size_t *lns, size_t rows)
+{
+  int **result = makeMatrix(rows, lns);
+  size_t start = 0, pos = 0;
+  while (start < n)
+  {
+    for (size_t i = 0; i < lns[pos]; i++)
+    {
+      result[pos][i] = t[start + i];
+    }
+    start += lns[pos++];
+  }
+  return result;
 }
